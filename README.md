@@ -193,7 +193,7 @@ print(student_dict)
 
 #%% Dicitionary (dict) 
 """
-{} curly brackets
+{}, i.e. curly brackets
 "key":"value"
 """
 # A dicitionary with one set of values (houses).
@@ -217,8 +217,7 @@ students_TwoValues = [
     {"name": "Hermione", "house": "Gryffindor", "patronus": "Otter"},
     {"name": "Harry", "house": "Gryffindor", "patronus": "Stag"},
     {"name": "Ron", "house": "Gryffindor", "patronus": "Jack Russell terrier"},
-    {"name": "Draco", "house": "Slytherin", "patronus": None}  # Draco has no patronus.  
-]
+    {"name": "Draco", "house": "Slytherin", "patronus": None}  # Draco has no patronus.]
 
 for student in students_TwoValues:
     print(student["name"], student["house"], student["patronus"], sep = ", ")
@@ -227,29 +226,27 @@ def main():
     #print_column(3)
     #print_row(4)
     print_square(3)
-    
+
 def print_column(height):
     print("# \n"*height, end="")
-    
+
 def print_row(width):
     print("?"*width)
-    
+   
 def print_square(size):
     for _ in range(size):
         print("#"*size)
-        
 main()
 
 #%% Dictionary manipulation.
 fleet = {
     "ship": "USS Enterprise", 
     "registry": "NCC-1701-D",
-    "captain": "Jean-Luc Picard"
-}
+    "captain": "Jean-Luc Picard"}
 
 # Return the number of keys.
 print(len(fleet)) 
-# Return value associated to ship.
+# Return value associated to key=ship.
 print(fleet.get("ship")) # equivalent to fleet["ship"]
 # Add key/value to dictionary.
 fleet.update({"length": "641 m"}) 

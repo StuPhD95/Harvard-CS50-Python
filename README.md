@@ -256,3 +256,35 @@ fleet.pop("captain") # .clear() removes all keys
 print(", ".join(fleet.keys()))   # .keys() returns all keys
 print(", ".join(fleet.values())) # .values() returns all values
 ```
+
+
+**Lecture 4 (Exceptions)**
+
+```python
+"""
+SyntaxError -> code isn't written in valid Python, e.g. print("Hello)
+ValueError  -> the value is invalid, int("Hello")
+NameError   -> unrecognised variable or function, e.g. print(x) when x hasn't been defined
+"""
+def main():
+    x = get_int("What's x? ")
+    print(f"x is {x}")
+
+def get_int(prompt):
+    while True:
+        try:
+            x = int(input(prompt))
+            return x # Return is stronger than break.
+        except ValueError:
+            print("x is not an integer")
+            
+def get_int_pass(prompt):
+    while True:
+        try:
+            x = int(input(prompt))
+            return x 
+        except ValueError:
+            pass # Instead of alerting the user that x is not an integer, just provide another input.
+
+main()
+```

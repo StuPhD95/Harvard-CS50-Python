@@ -263,7 +263,7 @@ print(", ".join(fleet.values())) # .values() returns all values
 ```python
 """
 SyntaxError -> code isn't written in valid Python, e.g. print("Hello)
-ValueError  -> the value is invalid, int("Hello")
+ValueError  -> the argument is invalid, int("Hello")
 NameError   -> unrecognised variable or function, e.g. print(x) when x hasn't been defined
 """
 def main():
@@ -285,6 +285,22 @@ def get_int_pass(prompt):
             return x 
         except ValueError:
             pass # Instead of alerting the user that x is not an integer, just provide another input.
-
 main()
+
+#%%
+def main():
+    height = int(input("Height: "))
+    pyramid(height)
+
+def pyramid(n):
+    for i in range(1,n+1):
+        print(i, end=" ")
+        print("#" * i)
+main()
+
+#%%
+def get_pace(miles, minutes):
+    if minutes < 0: 
+        raise ValueError("Minutes must be greater than 0.")
+    return minutes/miles
 ```

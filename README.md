@@ -124,7 +124,7 @@ match name:
         print("Who?")
 ```
 
-**Lecture 3 (Loops)**
+**Lecture 3 Notes (Loops)**
 
 ```python
 #%% While loop (counting down).
@@ -258,7 +258,7 @@ print(", ".join(fleet.values())) # .values() returns all values
 ```
 
 
-**Lecture 4 (Exceptions)**
+**Lecture 4 Notes (Exceptions)**
 
 ```python
 """

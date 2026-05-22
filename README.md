@@ -357,7 +357,6 @@ if len(sys.argv) == 2:
     
 #%% API = "Application Program Interface" 
 # pip install requests
-
 import requests
 import sys 
 import json # JSON = JavaScript Object Notation
@@ -369,9 +368,8 @@ response = requests.get("https://itunes.apple.com/search?entity=song&limit=10&te
 content = response.json()
 for result in content["results"]:
     print(result["trackName"])
-#%%
 
-# sayings.py
+#%% sayings.py
 def main():
     hello("world")
     goodbye("world")

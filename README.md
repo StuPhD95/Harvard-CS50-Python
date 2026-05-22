@@ -304,3 +304,91 @@ def get_pace(miles, minutes):
         raise ValueError("Minutes must be greater than 0.")
     return minutes/miles
 ```
+
+**Lecture 5 Notes (Libraries)**
+
+``` python
+import random  # import module
+
+coin = random.choice(["H","T"]) # Uniform probability. 
+print(coin)
+
+die = random.randint(1,6) # Uniform probability.
+print(die)
+
+cards = ["J", "Q", "K"]
+# .choices = uniformly take two elements of a list WITH replacement 
+print(random.choices(cards,k=2))              
+# weights=[] allows for non-uniform probability       
+print(random.choices(cards,weights=[80,10,10,],k=1)) 
+# .sample = uniformly take two elements of a list WITHOUT replacement
+print(random.sample(cards,k=2))                     
+# .shuffle = uniformly rarrange a list
+random.shuffle(cards) 
+for card in cards:
+    print(card, end = " ")
+#%%
+from random import choice  # from module import function
+
+coin = choice(["H","T"])
+print(coin)
+#%%
+import statistics
+
+marks = [100, 90]
+print(statistics.mean(marks))
+#%% 
+import sys 
+
+if len(sys.argv) < 2:
+    sys.exit("Too few arguments.")
+    
+for arg in sys.arv[1:]: # range(1,len(sys.arv)) would also work
+    print("Hello, my name is", argv) # argv[0] = name of file you're executing
+    
+#%% PyPI = "Python Package Index" 
+# pip install cowsay 
+import cowsay
+import sys
+
+if len(sys.argv) == 2:
+    cowsay.cow("Hello, " + sys.argv[1])
+    cowsay.trex("Hello, " + sys.argv[1])
+    
+#%% API = "Application Program Interface" 
+# pip install requests
+
+import requests
+import sys 
+import json # JSON = JavaScript Object Notation
+
+if len(sys.argv) != 2:
+    sys.exist()
+    
+response = requests.get("https://itunes.apple.com/search?entity=song&limit=10&term=" + sys.arvg[1])
+content = response.json()
+for result in content["results"]:
+    print(result["trackName"])
+#%%
+
+# sayings.py
+def main():
+    hello("world")
+    goodbye("world")
+
+def hello(name):
+    print(f"Hello, {name}.")
+    
+def goodbye(name):
+    print(f"Goodbye, {name}.")
+
+if __name__  == "__main__": # __name__ -> main() will not run if this file is imported into another file (i.e. next cell)
+    main()
+
+#%%
+import sys
+import sayings import hello
+
+if len(sys.argv) == 2:
+    hello(sys.argv[1])
+```

@@ -390,3 +390,116 @@ import sayings import hello
 if len(sys.argv) == 2:
     hello(sys.argv[1])
 ```
+
+**Lecture 6 Notes (Unit Tests)**
+
+```python
+#%% calculator.py
+def main():
+    x = int(input("What's x? "))
+    print(f"x squared is {square(x)}")
+
+def square(n):
+    return n * n  # n + n for testing purposes
+
+if __name__ == "__main__":
+    main()
+
+#%% test_calculator.py
+from calculator import square
+
+def main():
+    test_square()
+
+"""
+Takeaway: too many lines of code to test the square function
+Solution: pytest module
+"""   
+
+def test_square(): # It's convention to name the function in this way.
+    try:
+        assert square(2) == 4
+    except AssertionError:
+        print("2 squared was not 4")   
+    try:
+        assert square(3) == 9
+    except AssertionError:
+        print("3 squared was not 9")    
+    try:
+        assert square(-2) == 4
+    except AssertionError:
+            print("-2 squared was not 4")      
+    try:
+        assert square(-3) == 9
+    except AssertionError:
+            print("-3 squared was not 9")     
+    try:
+        assert square(0) == 0
+    except AssertionError:
+        print("0 squared was not 0")
+        
+if __name__ == "__main__":
+    main()
+
+#%% test_calculator_pytest.py
+from calculator import square
+import pytest 
+
+def test_square():
+    assert square(2) == 4
+    assert square(3) == 9
+    assert square(-2) == 4
+    assert square(-3) == 9
+    assert square(0) == 0 
+
+# run: pytest test_calculator_pytest.py
+# return: first failure in test_square
+
+#%%
+def test_positive():
+    assert square(2) == 4
+    assert square(3) == 9
+    
+def test_negative():
+    assert square(-2) == 4
+    assert square(-3) == 9
+    
+def test_zero():
+    assert square(0) == 0 
+    
+def test_str():
+    with pytest.raises(TypeError):
+        square("cat")
+           
+# run: pytest test_calculator_pytest.py
+# return: first failure in test_positive, test_negative, test_zero and test_str
+
+#%% hello.py
+def main():
+    name = input("What's your name? ")
+    print(hello(name))
+    
+def hello(to = "world"):
+    return f"Hello, {to}"
+    
+if __name__ == "__main__":
+    main()
+
+#%% test_hello.py
+from hello import hello
+
+def test_default():
+    assert hello() == "Hello, world"
+    
+def test_argument():
+    assert hello("Stuart") == "Hello, Stuart"
+
+def test_hogwarts():
+    for name in ["Hermione", "Harry", "Ron"]:
+        assert hello(name) == f"Hello, {name}"
+    
+# run: pytest test_hello.py
+# __init__.py in a folder tells Python to treat that
+# folder as a package (multiple modules inside a folder)
+# run: pytest FolderName
+```

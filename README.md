@@ -499,7 +499,6 @@ def test_hogwarts():
         assert hello(name) == f"Hello, {name}"
     
 # run: pytest test_hello.py
-# __init__.py in a folder tells Python to treat that
-# folder as a package (multiple modules inside a folder)
+# __init__.py in a folder tells Python to treat that folder as a package (multiple modules inside a folder)
 # run: pytest FolderName
 ```

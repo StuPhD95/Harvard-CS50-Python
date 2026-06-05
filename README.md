@@ -502,3 +502,129 @@ def test_hogwarts():
 # __init__.py in a folder tells Python to treat that folder as a package (multiple modules inside a folder)
 # run: pytest FolderName
 ```
+
+**Lecture 7 Notes (File I/O)**
+
+```python
+names = []
+
+for _ in range(3):
+    names.append(input("What's your name? ")) # Repeat 3 times.
+
+for name in sorted(names): # Note: sorted() supports a key parameter for custom sorting.
+    print(f"Hello, {name}.")
+
+#%%
+name = input("What's your name? ")
+
+with open("names.txt", "a") as file:   # "a" = append to names.txt
+    file.write(f"{name}\n" )           # Unlike print, write doesn't insert new lines.
+# file.close() isn't needed if "with" statement is inserted
+
+#%%
+with open("names.txt", "r") as file:  # "r" = read names.txt (DEFAULT)
+    lines = file.readlines() # readlines() method returns a list
+    
+for line in lines:
+    print("Hello,", line.rstrip()) # Remove the new line in names.txt. Could also use end="".
+    
+# Or more compactly... 
+
+with open("names.txt", "r") as file:
+    for line in file:
+        print("Hello,", line.strip())
+        
+#%%
+names = []
+
+with open("names.txt") as file:
+    for line in file:
+        names.append(line.rstrip())
+        
+for  name in sorted(names):
+    print(f"Hello, {name}.")
+
+# Or more compactly...
+
+with open("names.txt") as file:
+    for line in sorted(file):
+        print("Hello,", line.rstrip())
+        
+#%% CSV = comma separated values
+with open("students.csv") as file:
+    for line in file:
+        row = line.rstrip().split(",") # split() returns a list
+        print(f"{row[0]} is in {row[1]}")
+        # or more readable...
+        name, house = line.rstrip().split(",")
+        print(f"{name} is in {house}")
+        
+#%%
+students = []
+with open("students.csv") as file:
+    for line in file:
+        name, house = line.rstrip().split(",")
+        students.append(f"{name} is in {house}")
+for student in sorted(students):
+    print(student)
+
+# or by creating a dictionary...
+
+students = []
+with open("students.csv") as file:
+    for line in file:
+        name, house = line.rstrip().split(",")
+        student = {"name": name, "house": house} # Create dictionary.
+        students.append(student)
+def get_name(student):
+    return student["name"]
+for student in sorted(students, key = get_name):
+    print(f"{student['name']} is in {student['house']}") # Single quotes needed as double quotes are already used.
+   
+# or with an lambda (anonymous) function
+
+for student in sorted(students, key = lambda student: student["name"]):
+    print(f"{student['name']} is in {student['house']}")        
+
+# or using the csv module to deal with corner cases...
+
+import csv     
+       
+students = []
+with open("students.csv") as file:
+    reader = csv.reader(file) # DictReader to read file as a dictionary.
+    for name, house in reader:
+        students.append({"name": name, "house": house})
+        
+for student in sorted(students, key = lambda student: student["name"]):
+    print(f"{student['name']} is in {student['house']}")        
+        
+#%%
+import csv
+
+name = input("Name: ")
+home = input("Home: ")
+
+with open("students.csv", "a") as file:
+    writer = csv.writer(file)
+    writer.writerow([name, home])        
+
+# or with DictWriter...
+        
+with open("students.csv", "a") as file:
+    writer = csv.DictWriter(file, fieldnames=["name","home"])
+    writer.writerow({"name": name, "home": home})        
+        
+#%%
+import sys
+from PIL import Image # PIL module allows Python to manipulate images.
+
+images = []
+
+for arg in sys.argv[1:]:
+    image = Image.open(arg)
+    images.append(image)
+    
+images[0].save(
+    "costumes.gif", save_all=True, append_images=[images[1]], duraction=200, loop=0)
+```

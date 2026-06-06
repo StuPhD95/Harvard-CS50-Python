@@ -627,3 +627,108 @@ for arg in sys.argv[1:]:
     
 images[0].save("costumes.gif", save_all=True, append_images=[images[1]], duraction=200, loop=0)
 ```
+
+**Lecture 8 Notes (Regular Expressions)**
+
+```python
+email = input("Email: ").strip() 
+
+if "@" in email:   # Pythonic approach (preferred over a loop).
+    print("Valid")
+else:
+    print("Invalid")
+    
+username, domain = email.split("@")
+if username: # Returns true if len(username) > 0.
+    print("Valid")
+else:
+    print("Invalid")
+
+#%%
+import re # regular expression module
+
+#------------------------------------------------------------------------------
+# . = any character except a newline
+# * = 0 or more repetitions, e.g. @* = none or at least one @
+# + = 1 or more repetitions
+# ? = 0 or 1 repetition, e.g. \.? = . can be there once or not at all
+# {m}   = m repetitions
+# {m,n} = m-n repetitions
+#------------------------------------------------------------------------------
+# ^ = matches the start of the string
+# $ = matches the end of the string 
+#------------------------------------------------------------------------------
+# []  = set of characters, e.g. [A-Z] = every uppercase letter of the alphabet
+# [^] = complement set of characters, e.g. [^!] = any character except !
+#------------------------------------------------------------------------------
+# \w = word character, i.e. [a-zA-z0-9_]
+# \W = not a word character
+#------------------------------------------------------------------------------
+# A|B = either A or B
+# (...)   = captures a group (add ?P<name> at the start to call the group name)
+# (?:...) = non-capturing version
+#------------------------------------------------------------------------------
+
+# \ is an escape character, i.e. allows for a 'special sequence'
+# r = raw string, e.g. \n is interpretted as n and not newline
+if re.search(r"(\w|\.)+@\(\w+\.)?\w+\.edu$", email, re.IGNORECASE): 
+    print("Valid")
+else:
+    print("Invalid")
+
+#%%
+name = input("Name: ").strip()
+
+if "," in name:
+    last, first = name.split(", ")
+    name = f"{first} {last}"
+print(f"Hello, {name}!")
+
+# or using the re module...
+
+import re
+
+matches = re.search(r"(^.+), *(.+)$", name) 
+if matches: 
+    name = matches.group(2) + " " + matches.group(1) 
+    # matches.group(0) is reserved for something else
+print(f"Hello, {name}!")
+
+# or combining the if condition into one line using := (walrus operator)...
+
+if matches := re.search(r"(^.+), *(.+)$", name):
+    name = matches.group(2) + " " + matches.group(1) 
+print(f"Hello, {name}!")
+
+#%%
+import re
+
+url = input("URL: ").strip()
+username = re.sub(r"^(https?://)?(www\.)?twitter\.com/", "", url)
+print(f"Username: {username}")
+
+# What if the input contains google instead of twitter? Use re.search...
+
+matches = re.search(r"^https://(www\.)?twitter\.com/(.+)$", url, re.IGNORECASE)
+if matches:
+    print(f"Username:", matches.group(2)) # matches.group(1) = www. 
+    
+# or using the walrus operator...
+
+matches := re.search(r"^https://(?:www\.)?twitter\.com/([a-z0-9_]+)$", url, re.IGNORECASE)
+    print(f"Username:", matches.group(1)) # www. is no longer captured
+
+#%%
+import re
+
+def main():
+    code = input("Hexadecimal colour code: ")
+    pattern = r"^#[a-fA-F0-9]{6}$" # {6} = 6 characters of the proceeding set.
+    match = re.search(pattern, code) # Returns a "matched object".
+    if match:
+        print(f"Valid. Matched with {match.group()}.")
+    else:
+        print("Invalid.")
+    
+main()
+```
